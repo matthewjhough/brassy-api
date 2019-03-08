@@ -2,13 +2,13 @@ const { gql } = require('apollo-server-express');
 const { find, filter } = require('lodash');
 
 const schema = gql`
-  type Book {
+  type Post {
     title: String
     author: Author
   }
 
   type Author {
-    books: [Book]
+    posts: [Post]
   }
 
   type Query {
@@ -18,18 +18,21 @@ const schema = gql`
 
 const resolvers = {
     Query: {
+        // eslint-disable-next-line
         author(parent, args, context, info) {
+            // eslint-disable-next-line
             return find(authors, { id: args.id });
         },
     },
     Author: {
-        books(author) {
-            return filter(books, { author: author.name });
+        posts(author) {
+            // eslint-disable-next-line
+            return filter(posts, { author: author.name });
         },
     },
 };
 
 module.exports = {
-    bookResolvers: resolvers,
-    bookSchema: schema
+    postResolvers: resolvers,
+    postSchema: schema
 };

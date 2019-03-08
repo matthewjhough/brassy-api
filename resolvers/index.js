@@ -1,6 +1,6 @@
-const { bookResolvers, bookSchema } = require('./books');
+const { postResolvers, postSchema } = require('./posts');
 
 module.exports = {
-    resolvers: Object.assign({}, bookResolvers),
-    typeDefs: Object.assign({}, bookSchema)
+    resolvers: Object.assign({}, postResolvers),
+    typeDefs: Object.assign({}, postSchema)
 };
