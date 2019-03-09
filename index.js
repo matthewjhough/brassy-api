@@ -1,45 +1,41 @@
 const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./resolvers');
-const fs = require('fs');
-const https = require('https');
-const http = require('http');
+const { ApolloServer, gql } = require('apollo-server-express');
+const { times, random } = require('lodash');
+const faker = require('faker');
+const db = require('./models');
+const typeDefs = require('./schemas');
+const resolvers = require('./resolvers');
 
-const configurations = {
-    production: { ssl: true, port: 443, hostname: 'example.com' },
-    development: { ssl: false, port: 4000, hostname: 'localhost' }
-};
-
-const environment = process.env.NODE_ENV || 'development';
-const config = configurations[environment];
-
-const apollo = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+    typeDefs: gql(typeDefs),
+    resolvers,
+    context: { db }
+});
 
 const app = express();
-apollo.applyMiddleware({ app });
+server.applyMiddleware({ app });
 
-// Create the HTTPS or HTTP server, per configuration
-var server;
-if (config.ssl) {
-    // Assumes certificates are in .ssl folder from package root. Make sure the files
-    // are secured.
-    server = https.createServer(
-        {
-            key: fs.readFileSync(`./ssl/${environment}/server.key`),
-            cert: fs.readFileSync(`./ssl/${environment}/server.crt`)
-        },
-        app
+app.use(express.static('app/public'));
+
+db.sequelize.sync().then(() => {
+    // populate author table with dummy data
+    db.author.bulkCreate(
+        times(10, () => ({
+            firstName: faker.name.firstName(),
+            lastName: faker.name.lastName()
+        }))
     );
-} else {
-    server = http.createServer(app);
-}
+    // populate post table with dummy data
+    db.post.bulkCreate(
+        times(10, () => ({
+            title: faker.lorem.sentence(),
+            content: faker.lorem.paragraph(),
+            authorId: random(1, 10)
+        }))
+    );
 
-// Add subscription support
-apollo.installSubscriptionHandlers(server);
-
-server.listen({ port: config.port }, () =>
-    console.log(
-        '🚀 Server ready at',
-        `http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${apollo.graphqlPath}`
-    )
-);
+    app.listen({ port: 4000 }, () =>
+        // eslint-disable-next-line
+        console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+    );
+});
