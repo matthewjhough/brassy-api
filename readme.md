@@ -14,7 +14,8 @@ to remove this instance: `docker rm -f local-sql`
 To get the server running you must perform a few steps:
 
 - run command: `npm i`
-- create the database: `npm run db:init`
+- generate missing sequelize files: `npm run generate-sequelize`
+- create the database: `npm run db:init` or create database + seed initial data with `npm run initialize`
 - start the app: `npm start`
 
 optional - if you make any database changes, you need to update the migrations with `npm run migrate`.

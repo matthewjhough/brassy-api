@@ -6,6 +6,8 @@
   "scripts": {
     "generate-sequelize": "./node_modules/sequelize-cli/lib/sequelize --options-path=src/options.js init:models; ./node_modules/sequelize-cli/lib/sequelize init:config",
     "db:init": "sequelize --options-path=src/options.js db:create",
+    "db:seed": "node src/seeds/startup.js",
+    "initialize": "npm run db:init && npm run db:seed",
     "db:migrate": "sequelize --options-path=src/options.js db:migrate",
     "start": "NODE_ENV=development nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
