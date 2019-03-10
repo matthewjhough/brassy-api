@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "password",
+    "database": "msg_api",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "user": "root",
+    "password": "test",
+    "database": "msgapi",
+    "host": "172.17.0.2",
+    "dialect": "mysql"
+  },
+  "production": {
+    "user": "root",
+    "password": "test",
+    "database": "msgapi",
+    "host": "172.17.0.2",
+    "dialect": "mysql"
+  }
+}

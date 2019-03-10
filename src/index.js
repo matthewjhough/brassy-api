@@ -1,7 +1,7 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
-const { times, random } = require('lodash');
-const faker = require('faker');
+// const { times, random } = require('lodash');
+// const faker = require('faker');
 const db = require('./models');
 const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
