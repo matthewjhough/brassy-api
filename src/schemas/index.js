@@ -1,5 +1,8 @@
 const user = require('./user.schema');
 const message = require('./message.schema');
+const session = require('./session.schema');
+const sessionType = require('./sessionType.schema');
+const status = require('./status.schema');
 const scalars = require('./scalars.schema');
 
 module.exports = `
@@ -8,6 +11,12 @@ module.exports = `
   ${user}
 
   ${message}
+
+  ${session}
+
+  ${sessionType}
+
+  ${status}
 
   type Query {
     messages: [Message!]!

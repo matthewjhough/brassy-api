@@ -5,5 +5,6 @@ type User {
     lastName: String
     username: String
     messages: [Message!]!
+    sessions: [Session!]!
 }
 `;

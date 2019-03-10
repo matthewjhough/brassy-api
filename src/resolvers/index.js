@@ -4,9 +4,11 @@ const DateMap = require('./date');
 module.exports = {
     Date: DateMap,
     User: {
-        messages: (parent, args, context, info) => parent.getMessages(),
+        messages: (parent, args, context, info) => parent.getMessage(),
+        sessions: (parent, args, { db }, info) => parent.getSession(),
     },
     Message: {
+        session: (parent, args, context, info) => parent.getSession(),
         user: (parent, args, context, info) => parent.getUser(),
     },
     Query: {
@@ -23,11 +25,9 @@ module.exports = {
                 created_at: new Date().toLocaleString()
             })
         ,
-
-        updateMessage: async (parent, { content, userId, id }, { db }, info) => {
+        updateMessage: async (parent, { content, id }, { db }, info) => {
             await db.message.update({
                 content: content,
-                userId: userId,
                 updated_at: new Date().toLocaleString()
             },
                 {

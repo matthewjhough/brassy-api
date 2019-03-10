@@ -1,10 +1,10 @@
 module.exports = `
 type Message {
     id: ID!
+    content: String!
     userId: ID!
     user: User!
-    content: String
-    created_at: Date
-    updated_at: Date
+    status: Status!
+    session: Session!
 }
 `;
