@@ -1,20 +1,23 @@
-const author = require('./author');
-const post = require('./post');
+const user = require('./user.schema');
+const message = require('./message.schema');
+const scalars = require('./scalars.schema');
 
 module.exports = `
-  ${author}
-  
-  ${post}
+  ${scalars}
+
+  ${user}
+
+  ${message}
 
   type Query {
-    posts: [Post!]!
-    post(id: ID!): Post
-    author(id: ID!): Author
-    authors: [Author!]!
+    messages: [Message!]!
+    message(id: ID!): Message
+    user(id: ID!): User
+    users: [User!]!
   }
   type Mutation {
-    createPost(title: String, content:String!, authorId: ID!): Post!
-    updatePost(id: ID!, title: String, content:String!): [Int!]!
-    deletePost(id: ID!): Int!
+    createMessage(content: String!, userId: ID!): Message!
+    updateMessage(id: ID!, content:String!): Message
+    deleteMessage(id: ID!): Int!
   }
 `;

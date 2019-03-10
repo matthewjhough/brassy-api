@@ -1,37 +1,42 @@
 /* eslint-disable */
+const DateMap = require('./date');
 
 module.exports = {
-    Author: {
-        posts: (parent, args, context, info) => parent.getPosts(),
+    Date: DateMap,
+    User: {
+        messages: (parent, args, context, info) => parent.getMessages(),
     },
-    Post: {
-        author: (parent, args, context, info) => parent.getAuthor(),
+    Message: {
+        user: (parent, args, context, info) => parent.getUser(),
     },
     Query: {
-        posts: (parent, args, { db }, info) => db.post.findAll(),
-        authors: (parent, args, { db }, info) => db.author.findAll(),
-        post: (parent, { id }, { db }, info) => db.post.findById(id),
-        author: (parent, { id }, { db }, info) => db.author.findById(id)
+        users: (parent, args, { db }, info) => db.user.findAll(),
+        messages: (parent, args, { db }, info) => db.message.findAll(),
+        user: (parent, { id }, { db }, info) => db.user.findById(id),
+        message: (parent, { id }, { db }, info) => db.message.findById(id)
     },
     Mutation: {
-        createPost: (parent, { title, content, authorId }, { db }, info) =>
-            db.post.create({
-                title: title,
+        createMessage: (parent, { content, userId }, { db }, info) =>
+            db.message.create({
                 content: content,
-                authorId: authorId
+                userId: userId
             }),
-        updatePost: (parent, { title, content, id }, { db }, info) =>
-            db.post.update({
-                title: title,
-                content: content
+
+        updateMessage: async (parent, { content, userId, id }, { db }, info) => {
+            await db.message.update({
+                content: content,
+                userId: userId
             },
                 {
                     where: {
                         id: id
                     }
-                }),
-        deletePost: (parent, { id }, { db }, info) =>
-            db.post.destroy({
+                })
+
+            return db.message.findById(id);
+        },
+        deleteMessage: (parent, { id }, { db }, info) =>
+            db.message.destroy({
                 where: {
                     id: id
                 }

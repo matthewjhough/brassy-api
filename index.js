@@ -6,6 +6,7 @@ const db = require('./models');
 const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
 
+
 const server = new ApolloServer({
     typeDefs: gql(typeDefs),
     resolvers,
@@ -18,19 +19,22 @@ server.applyMiddleware({ app });
 app.use(express.static('app/public'));
 
 db.sequelize.sync().then(() => {
-    // populate author table with dummy data
-    db.author.bulkCreate(
+
+    // popuplate user table with dummy data
+    db.user.bulkCreate(
         times(10, () => ({
-            firstName: faker.name.firstName(),
-            lastName: faker.name.lastName()
+            firstName: faker.name.findName(),
+            lastName: faker.name.lastName(),
+            username: faker.internet.email()
         }))
     );
-    // populate post table with dummy data
-    db.post.bulkCreate(
+
+    // populate message table with dummy data
+    db.message.bulkCreate(
         times(10, () => ({
-            title: faker.lorem.sentence(),
-            content: faker.lorem.paragraph(),
-            authorId: random(1, 10)
+            content: faker.lorem.sentence(),
+            userId: random(1, 10),
+            created_at: new Date()
         }))
     );
 

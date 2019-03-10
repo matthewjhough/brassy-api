@@ -1,24 +1,24 @@
 module.exports = (sequelize, DataTypes) => {
-    const Post = sequelize.define('post', {
+    const Message = sequelize.define('message', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        title: DataTypes.STRING,
         content: {
             type: DataTypes.TEXT,
             allowNull: false
-        },
+        }
     },
     {
         freezeTableName: true,
+        timestamps: true
     }
     );
 
-    Post.associate = (models) => {
-        Post.belongsTo(models.author);
+    Message.associate = (models) => {
+        Message.belongsTo(models.user);
     };
 
-    return Post;
+    return Message;
 };
