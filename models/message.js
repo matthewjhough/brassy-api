@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
     const Message = sequelize.define('message', {
         id: {
@@ -8,6 +10,13 @@ module.exports = (sequelize, DataTypes) => {
         content: {
             type: DataTypes.TEXT,
             allowNull: false
+        },
+        created_at: {
+            type: Sequelize.DATE,
+            allowNull: false
+        },
+        updated_at: {
+            type: Sequelize.DATE
         }
     },
     {
