@@ -31,6 +31,14 @@ db.sequelize.sync().then(() => {
     // eslint-disable-next-line
     console.log('User finn sterling added');
 
+    db.user.create({
+        firstName: 'Tyson',
+        lastName: 'Harmon',
+        username: 'tharmon@test.com'
+    });
+    // eslint-disable-next-line
+    console.log('User Tyson Harmon added');
+
     // eslint-disable-next-line
     console.log(':::::DATA SEED COMPLETE, CLOSE SESSION NOW::::::');
 });
