@@ -4,8 +4,8 @@ const DateMap = require('./date');
 module.exports = {
     Date: DateMap,
     User: {
-        messages: (parent, args, context, info) => parent.getMessage(),
-        sessions: (parent, args, { db }, info) => parent.getSession(),
+        sessions: (parent, args, context, info) => parent.getSessions(),
+        messages: (parent, args, context, info) => parent.getMessages(),
     },
     Message: {
         session: (parent, args, context, info) => parent.getSession(),
