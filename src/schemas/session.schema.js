@@ -5,9 +5,10 @@ type Session {
     id: ID!
     messageIds: [ID!]!
     messages: [Message!]!
-    userIds: [ID!]!
+    session_users: [ID!]!
     users: [User!]!
     sessionTypeId: ID!
+    sessionType: SessionType
     ${status}
 }
 `;

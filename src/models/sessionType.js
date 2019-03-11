@@ -13,5 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     }
     );
 
+    SessionType.associate = (models) => {
+        SessionType.hasMany(models.session);
+    };
+
     return SessionType;
 };

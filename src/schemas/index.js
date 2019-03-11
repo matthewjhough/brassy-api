@@ -27,7 +27,7 @@ module.exports = `
     createMessage(content: String!, userId: ID!): Message!
     updateMessage(id: ID!, content:String!): Message
     deleteMessage(id: ID!): Int!
-    createSession(userIds: [ID!]!, sessionTypeId: ID!): Session!
+    createSession(session_users: [ID!]!, sessionTypeId: ID!): Session!
     deleteSession(id: ID!): Int!
   }
 `;

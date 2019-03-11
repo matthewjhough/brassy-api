@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     User.associate = (models) => {
-        User.hasMany(models.session);
+        User.belongsToMany(models.session, { through: 'session_users' });
         User.hasMany(models.message);
     };
 
