@@ -5,8 +5,8 @@ type Session {
     id: ID!
     messageIds: [ID!]!
     messages: [Message!]!
-    session_users: [ID!]!
     users: [User!]!
+    userId: [ID!]!
     sessionTypeId: ID!
     sessionType: SessionType
     ${status}

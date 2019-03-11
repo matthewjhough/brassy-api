@@ -1,12 +1,15 @@
 /* eslint-disable */
 module.exports = {
-    createSession: async (parent, { sessionTypeId, session_users }, { db }, info) => {
+    createSession: async (parent, { sessionTypeId, userId }, { db }, info) => {
         const sessionType = await db.sessionType.findById(sessionTypeId);
-        console.log(':::INPUT USER IDS::::', session_users)
         return db.session.create({
-            session_users: session_users,
+            userId: userId,
             sessionTypeId: sessionType.dataValues.id
-        })
+        }).then(async (session) => {
+            await session.setUsers(userId);
+
+            return session;
+        });
     }
     ,
     deleteSession: (parent, { id }, { db }, info) =>

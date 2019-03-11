@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, DataTypes) => {
     const Session = sequelize.define('session', {
         id: {
@@ -18,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Session.associate = (models) => {
-        Session.belongsToMany(models.user, { through: 'session_users' });
+        Session.belongsToMany(models.user, { through: 'userId' });
         Session.hasMany(models.message);
         Session.belongsTo(models.sessionType);
     };

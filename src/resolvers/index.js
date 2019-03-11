@@ -14,9 +14,9 @@ module.exports = {
         user: (parent, args, context, info) => parent.getUser(),
     },
     Session: {
-        messages: (parent, args, context, info) => parent.getMessages(),
         users: (parent, args, context, info) => parent.getUsers(),
-        sessionType: (parent, args, { db }, info) => db.sessionType.findById(parent.dataValues.sessionTypeId)
+        messages: (parent, args, context, info) => parent.getMessages(),
+        sessionType: (parent, args, { db }, info) => parent.getSessionType()
     },
     Query: {
         users: (parent, args, { db }, info) => db.user.findAll(),
