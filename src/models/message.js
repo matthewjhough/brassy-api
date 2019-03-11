@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     Message.associate = (models) => {
         Message.belongsTo(models.session);
         Message.belongsTo(models.user);
-        Message.hasOne(models.status);
     };
 
     return Message;

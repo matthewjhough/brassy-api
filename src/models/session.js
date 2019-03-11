@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
+        },
+        sessionTypeId: {
+            type: DataTypes.INTEGER,
+            foreignKey: true,
         }
     },
     {
@@ -14,10 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Session.associate = (models) => {
-        Session.belongsToMany(models.user, { through: 'session' });
+        Session.belongsToMany(models.user, { through: 'sessionId' });
         Session.hasMany(models.message);
-        Session.hasOne(models.status);
-        Session.hasOne(models.sessionType);
     };
 
     return Session;

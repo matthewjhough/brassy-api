@@ -2,7 +2,6 @@ const user = require('./user.schema');
 const message = require('./message.schema');
 const session = require('./session.schema');
 const sessionType = require('./sessionType.schema');
-const status = require('./status.schema');
 const scalars = require('./scalars.schema');
 
 module.exports = `
@@ -16,9 +15,9 @@ module.exports = `
 
   ${sessionType}
 
-  ${status}
-
   type Query {
+    sessions: [Session!]!
+    sessionTypes: [SessionType!]!
     messages: [Message!]!
     message(id: ID!): Message
     user(id: ID!): User
@@ -28,5 +27,7 @@ module.exports = `
     createMessage(content: String!, userId: ID!): Message!
     updateMessage(id: ID!, content:String!): Message
     deleteMessage(id: ID!): Int!
+    createSession(userIds: [ID!]!, sessionTypeId: ID!): Session!
+    deleteSession(id: ID!): Int!
   }
 `;

@@ -1,5 +1,7 @@
 /* eslint-disable */
-const DateMap = require('./date');
+const DateMap = require('./_types/date');
+const MessageMutations = require('./message');
+const SessionMutations = require('./session')
 
 module.exports = {
     Date: DateMap,
@@ -11,38 +13,17 @@ module.exports = {
         session: (parent, args, context, info) => parent.getSession(),
         user: (parent, args, context, info) => parent.getUser(),
     },
+    Session: {
+        messages: (parent, args, context, info) => parent.getMessages(),
+        users: (parent, args, context, info) => parent.getUsers(),
+    },
     Query: {
         users: (parent, args, { db }, info) => db.user.findAll(),
+        sessions: (parent, args, { db }, info) => db.session.findAll(),
+        sessionTypes: (parent, args, { db }, info) => db.sessionType.findAll(),
         messages: (parent, args, { db }, info) => db.message.findAll(),
         user: (parent, { id }, { db }, info) => db.user.findById(id),
         message: (parent, { id }, { db }, info) => db.message.findById(id)
     },
-    Mutation: {
-        createMessage: async (parent, { content, userId }, { db }, info) =>
-            await db.message.create({
-                content: content,
-                userId: userId,
-                created_at: new Date().toLocaleString()
-            })
-        ,
-        updateMessage: async (parent, { content, id }, { db }, info) => {
-            await db.message.update({
-                content: content,
-                updated_at: new Date().toLocaleString()
-            },
-                {
-                    where: {
-                        id: id
-                    }
-                })
-
-            return db.message.findById(id);
-        },
-        deleteMessage: (parent, { id }, { db }, info) =>
-            db.message.destroy({
-                where: {
-                    id: id
-                }
-            })
-    }
+    Mutation: Object.assign({}, MessageMutations, SessionMutations)
 };
