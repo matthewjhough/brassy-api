@@ -7,7 +7,6 @@ module.exports = {
             sessionTypeId: sessionType.dataValues.id
         }).then(async (session) => {
             await session.setUsers(userId);
-
             return session;
         });
     }
