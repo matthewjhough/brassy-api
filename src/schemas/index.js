@@ -17,8 +17,9 @@ module.exports = `
 
   type Query {
     sessions: [Session!]!
+    session(userId: [ID!]!): [Session]!
     sessionTypes: [SessionType!]!
-    messages: [Message!]!
+    messages(sessionId: ID!): [Message!]!
     message(id: ID!): Message
     user(id: ID!): User
     users: [User!]!
@@ -30,5 +31,9 @@ module.exports = `
     deleteMessage(id: ID!): Int!
     createSession(userId: [ID!]!, sessionTypeId: ID!): Session!
     deleteSession(id: ID!): Int!
+  }
+
+  type Subscription {
+    messageAdded: Message
   }
 `;

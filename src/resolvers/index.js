@@ -1,30 +1,45 @@
 /* eslint-disable */
 const DateMap = require('./_types/date');
 const MessageMutations = require('./message');
-const SessionMutations = require('./session')
+const SessionMutations = require('./session');
 
 module.exports = {
-    Date: DateMap,
-    User: {
-        sessions: (parent, args, context, info) => parent.getSessions(),
-        messages: (parent, args, context, info) => parent.getMessages(),
-    },
-    Message: {
-        session: (parent, args, context, info) => parent.getSession(),
-        user: (parent, args, context, info) => parent.getUser(),
-    },
-    Session: {
-        users: (parent, args, context, info) => parent.getUsers(),
-        messages: (parent, args, context, info) => parent.getMessages(),
-        sessionType: (parent, args, { db }, info) => parent.getSessionType()
-    },
-    Query: {
-        users: (parent, args, { db }, info) => db.user.findAll(),
-        sessions: (parent, args, { db }, info) => db.session.findAll(),
-        sessionTypes: (parent, args, { db }, info) => db.sessionType.findAll(),
-        messages: (parent, args, { db }, info) => db.message.findAll(),
-        user: (parent, { id }, { db }, info) => db.user.findById(id),
-        message: (parent, { id }, { db }, info) => db.message.findById(id)
-    },
-    Mutation: Object.assign({}, MessageMutations, SessionMutations)
+  Date: DateMap,
+  User: {
+    sessions: (parent, args, context, info) => parent.getSessions(),
+    messages: (parent, args, context, info) => parent.getMessages()
+  },
+  Message: {
+    session: (parent, args, context, info) => parent.getSession(),
+    user: (parent, args, context, info) => parent.getUser()
+  },
+  Session: {
+    users: (parent, args, context, info) => parent.getUsers(),
+    messages: (parent, args, context, info) => parent.getMessages(),
+    sessionType: (parent, args, { db }, info) => parent.getSessionType()
+  },
+  Query: {
+    users: (parent, args, { db }, info) => db.user.findAll(),
+    sessions: (parent, args, { db }, info) => db.session.findAll(),
+    session: (parent, { userId }, { db }, info) =>
+      db.session.findAll({
+        include: [
+          {
+            model: db.user,
+            attributs: ['id'],
+            through: { where: { userId } }
+          }
+        ]
+      }),
+    sessionTypes: (parent, args, { db }, info) => db.sessionType.findAll(),
+    messages: (parent, { sessionId }, { db }, info) =>
+      db.message.findAll({
+        where: {
+          sessionId
+        }
+      }),
+    user: (parent, { id }, { db }, info) => db.user.findById(id),
+    message: (parent, { id }, { db }, info) => db.message.findById(id)
+  },
+  Mutation: Object.assign({}, MessageMutations, SessionMutations)
 };
