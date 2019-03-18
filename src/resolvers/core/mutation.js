@@ -1,5 +1,5 @@
 const { messageMutations } = require('../message');
-const SessionMutations = require('../session');
+const { sessionMutations } = require('../session');
 module.exports = {
-    Mutation: Object.assign({}, messageMutations, SessionMutations)
+    Mutation: Object.assign({}, messageMutations, sessionMutations)
 };

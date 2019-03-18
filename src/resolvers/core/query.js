@@ -5,12 +5,11 @@ module.exports = {
         // To be removed, shouldn't be able to query all sessions.
         sessions: (parent, args, { db }) => db.session.findAll(),
         session: (parent, { userId }, { db }) =>
-            db.session.findAll({
+            db.session.findOne({
                 include: [
                     {
                         model: db.user,
-                        attributs: ['id'],
-                        through: { where: { userId } }
+                        where: { id: { in: userId } }
                     }
                 ]
             }),

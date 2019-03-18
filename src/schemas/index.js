@@ -17,7 +17,7 @@ module.exports = `
 
   type Query {
     sessions: [Session!]!
-    session(userId: [ID!]!): [Session]!
+    session(userId: [ID!]!): Session
     sessionTypes: [SessionType!]!
     messages(sessionId: ID!): [Message!]!
     message(id: ID!): Message

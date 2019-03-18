@@ -1,23 +1,28 @@
 module.exports = (sequelize, DataTypes) => {
-    const Session = sequelize.define('session', {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+    const Session = sequelize.define(
+        'session',
+        {
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            sessionTypeId: {
+                type: DataTypes.INTEGER,
+                foreignKey: true
+            }
         },
-        sessionTypeId: {
-            type: DataTypes.INTEGER,
-            foreignKey: true,
+        {
+            freezeTableName: true,
+            timestamps: true
         }
-    },
-    {
-        freezeTableName: true,
-        timestamps: true
-    }
     );
 
-    Session.associate = (models) => {
-        Session.belongsToMany(models.user, { through: 'userId' });
+    Session.associate = models => {
+        Session.belongsToMany(models.user, {
+            through: 'UserSession',
+            foreignKey: 'sessionId'
+        });
         Session.hasMany(models.message);
         Session.belongsTo(models.sessionType);
     };

@@ -1,24 +1,29 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('user', {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
+    const User = sequelize.define(
+        'user',
+        {
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            firstName: DataTypes.STRING,
+            lastName: DataTypes.STRING,
+            username: {
+                type: DataTypes.STRING,
+                allowNull: false
+            }
         },
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false
+        {
+            freezeTableName: true
         }
-    },
-    {
-        freezeTableName: true,
-    }
     );
 
-    User.associate = (models) => {
-        User.belongsToMany(models.session, { through: 'userId' });
+    User.associate = models => {
+        User.belongsToMany(models.session, {
+            through: 'UserSession',
+            foreignKey: 'userId'
+        });
         User.hasMany(models.message);
     };
 

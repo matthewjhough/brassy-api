@@ -1,7 +1,6 @@
 const db = require('../models');
 
 db.sequelize.sync().then(() => {
-
     // example bulk-create seed.
     // db.message.bulkCreate(
     //     times(10, () => ({
@@ -15,13 +14,13 @@ db.sequelize.sync().then(() => {
         value: 'DIRECT'
     });
     // eslint-disable-next-line
-    console.log('Direct session type added');
+  console.log('Direct session type added');
 
     db.sessionType.create({
         value: 'GROUP'
     });
     // eslint-disable-next-line
-    console.log('Group session type added');
+  console.log('Group session type added');
 
     db.user.create({
         firstName: 'Finn',
@@ -29,7 +28,7 @@ db.sequelize.sync().then(() => {
         username: 'fsterling@test.com'
     });
     // eslint-disable-next-line
-    console.log('User finn sterling added');
+  console.log('User finn sterling added');
 
     db.user.create({
         firstName: 'Tyson',
@@ -37,8 +36,21 @@ db.sequelize.sync().then(() => {
         username: 'tharmon@test.com'
     });
     // eslint-disable-next-line
-    console.log('User Tyson Harmon added');
+  console.log('User Tyson Harmon added');
+
+    const seedUserIds = ['1', '2'];
+
+    db.session
+        .create({
+            userId: seedUserIds,
+            sessionTypeId: '1'
+        })
+        .then(async session => {
+            await session.setUsers(seedUserIds);
+            return session;
+        });
+    console.log('Initial session created.');
 
     // eslint-disable-next-line
-    console.log(':::::DATA SEED COMPLETE, CLOSE SESSION NOW::::::');
+  console.log(':::::DATA SEED COMPLETE, CLOSE SESSION NOW::::::');
 });
