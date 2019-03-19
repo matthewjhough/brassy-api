@@ -1,5 +1,5 @@
-const sessionMutations = require('./mutations');
-const sessionQueries = require('./queries');
+const sessionMutations = require('./session.mutations');
+const sessionQueries = require('./session.queries');
 
 module.exports = {
     sessionMutations,

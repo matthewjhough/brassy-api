@@ -1,5 +1,5 @@
-const messageMutations = require('./mutations');
-const messageQueries = require('./queries');
+const messageMutations = require('./message.mutations');
+const messageQueries = require('./message.queries');
 
 module.exports = {
     messageMutations,
