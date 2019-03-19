@@ -16,20 +16,25 @@ module.exports = `
   ${sessionType}
 
   type Query {
-    sessions: [Session!]!
-    session(userId: [ID!]!): Session
+    sessions(currentUserId: ID!): [Session!]!
+    session(sessionId: ID): Session
+
     sessionTypes: [SessionType!]!
+
     messages(sessionId: ID!): [Message!]!
     message(id: ID!): Message
+
     user(id: ID!): User
     users: [User!]!
   }
 
   type Mutation {
+    
     createMessage(content: String!, userId: ID!, sessionId: ID!): Message!
     updateMessage(id: ID!, content:String!): Message
     deleteMessage(id: ID!): Int!
-    createSession(userId: [ID!]!, sessionTypeId: ID!): Session!
+
+    createSession(ids: [ID!]!, sessionTypeId: ID!): Session!
     deleteSession(id: ID!): Int!
   }
 

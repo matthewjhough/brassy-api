@@ -3,15 +3,20 @@ module.exports = {
     // todo contacts (list of users with access to)
         users: (parent, args, { db }) => db.user.findAll(),
         // To be removed, shouldn't be able to query all sessions.
-        sessions: (parent, args, { db }) => db.session.findAll(),
-        session: (parent, { userId }, { db }) =>
-            db.session.findOne({
+        sessions: (parent, { currentUserId }, { db }) =>
+            db.session.findAll({
                 include: [
                     {
                         model: db.user,
-                        where: { id: { in: userId } }
+                        where: { id: currentUserId }
                     }
                 ]
+            }),
+        session: async (parent, { sessionId }, { db }) =>
+            db.session.findOne({
+                where: {
+                    id: sessionId
+                }
             }),
         sessionTypes: (parent, args, { db }) => db.sessionType.findAll(),
         messages: (parent, { sessionId }, { db }) =>
