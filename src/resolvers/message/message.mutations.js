@@ -1,10 +1,20 @@
+const brassy = require('../../index');
+
 module.exports = {
-    createMessage: async (parent, { content, userId, sessionId }, { db }) =>
-        await db.message.create({
+    createMessage: async (parent, { content, userId, sessionId }, { db }) => {
+        const message = await db.message.create({
             content: content,
             userId: userId,
             sessionId: sessionId
-        }),
+        });
+
+        // todo, withFilter
+        await brassy.observable.publish('MESSAGE_ADDED', {
+            messageAdded: message
+        });
+
+        return message;
+    },
     updateMessage: async (parent, { content, id }, { db }) => {
         await db.message.update(
             {

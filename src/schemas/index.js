@@ -29,11 +29,9 @@ module.exports = `
   }
 
   type Mutation {
-    
-    createMessage(content: String!, userId: ID!, sessionId: ID!): Message!
+    createMessage(content: String!, userId: ID!, sessionId: ID!): Message
     updateMessage(id: ID!, content:String!): Message
     deleteMessage(id: ID!): Int!
-
     createSession(ids: [ID!]!, sessionTypeId: ID!): Session!
     deleteSession(id: ID!): Int!
   }
