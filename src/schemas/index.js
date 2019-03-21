@@ -37,6 +37,6 @@ module.exports = `
   }
 
   type Subscription {
-    messageAdded: Message
+    messageAdded(sessionId: ID!, userId: ID!): Message
   }
 `;

@@ -8,7 +8,6 @@ module.exports = {
             sessionId: sessionId
         });
 
-        // todo, withFilter
         await brassy.observable.publish('MESSAGE_ADDED', {
             messageAdded: message
         });
